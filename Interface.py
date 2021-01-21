@@ -35,7 +35,7 @@ def command_edit(lib):
     command_list = []
     number = int(input(f'Введите номер книги, которую хотите отредактировать от 1 до {len(lib)} '))
     command_list.append(number)
-    list_edit_par = [i for i in lib[0].keys()]
+    list_edit_par = [i for i in lib[0].keys() if i != 'number']
     edit_param = input(f'Выберите из списка параметр, который хотите отредактировать {list_edit_par} ')
     while edit_param not in list_edit_par:
         edit_param = input(f'Выберите из списка параметр, который хотите отредактировать {list_edit_par} ')
