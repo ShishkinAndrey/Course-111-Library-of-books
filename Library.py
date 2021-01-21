@@ -78,3 +78,14 @@ def search_(lib: list, command: list):
     return 'Искомое значение не найдено'
 
 
+def sort_(lib, command: list):
+    '''
+    Функция выполняющая сортировку по выбранному параметру книги с возможность выбора по возрастанию или по убыванию
+    :param lib: Библиотека кнги (список словарей)
+    :param command: список команд со следующими индексами: 0-ой - параметр книги по которому осуществлять сортировку,
+    1-ый - по возрастанию/по убыванию
+    :return:
+    '''
+    sort_lib = sorted(lib, key=lambda k: k[command[0]], reverse=command[1])
+    for book in sort_lib:
+        print(book)

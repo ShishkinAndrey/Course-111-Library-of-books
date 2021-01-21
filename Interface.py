@@ -1,11 +1,11 @@
-from Library import add_, get_library_from_json, library_to_json, delete_, edit_, search_
+from Library import add_, get_library_from_json, library_to_json, delete_, edit_, search_, sort_
 
 
 def _input():
-    list_par = ['add', 'delete', 'edit', 'search', 'review']
-    input_command = input('Введите команду add-delete-edit-search-review \n')
+    list_par = ['add', 'delete', 'edit', 'search', 'review','sort']
+    input_command = input('Введите команду review-add-delete-edit-search-sort \n')
     while not input_command.isalpha() or input_command not in list_par:
-        input_command = input('Error! Введите одну из команд add-delete-edit-search-review \n')
+        input_command = input('Error! Введите одну из команд review-add-delete-edit-search-sort \n')
     return input_command.lower()
 
 
@@ -36,9 +36,9 @@ def command_edit(lib):
     number = int(input(f'Введите номер книги, которую хотите отредактировать от 1 до {len(lib)} '))
     command_list.append(number)
     list_edit_par = [i for i in lib[0].keys() if i != 'number']
-    edit_param = input(f'Выберите из списка параметр, который хотите отредактировать {list_edit_par} ')
+    edit_param = input(f'Выберите из списка параметр, который хотите отредактировать {list_edit_par} ').lower()
     while edit_param not in list_edit_par:
-        edit_param = input(f'Выберите из списка параметр, который хотите отредактировать {list_edit_par} ')
+        edit_param = input(f'Выберите из списка параметр, который хотите отредактировать {list_edit_par} ').lower()
     command_list.append(edit_param)
     if edit_param == 'year' or edit_param == 'pages':
         new_value = int(input('Введите новые данные для данного параметра'))
@@ -53,7 +53,7 @@ def command_edit(lib):
 def command_search(lib):
     command_list = []
     list_search_par = [i for i in lib[0].keys()]
-    search_parameter = input(f'Введите из списка параметр, который хотите найти {list_search_par} ')
+    search_parameter = input(f'Введите из списка параметр, который хотите найти {list_search_par} ').lower()
     if search_parameter == 'name' or search_parameter == 'author':
         search_value = input(f'Введите значение {search_parameter}, который хотите найти ')
     elif search_parameter == 'rating' or search_parameter == 'price':
@@ -62,6 +62,21 @@ def command_search(lib):
         search_value = int(input(f'Введите значение {search_parameter}, который хотите найти '))
     command_list.append(search_parameter)
     command_list.append(search_value)
+    return command_list
+
+
+def command_sort(lib):
+    command_list = []
+    list_search_par = [i for i in lib[0].keys()]
+    sort_parameter = input(f'Введите параметр, по которому хотите отсортировать библиотеку {list_search_par} ')
+    choose_reverse = input(f'Выберите способ сортировки: по возрастанию или по убыванию. '
+                           f'Если по возранию - введите нет, если по убыванию - да. ').lower()
+    if choose_reverse == 'нет':
+        choose_reverse = False
+    elif choose_reverse == 'да':
+        choose_reverse = True
+    command_list.append(sort_parameter)
+    command_list.append(choose_reverse)
     return command_list
 
 
@@ -79,6 +94,8 @@ def main_func():
             library_to_json(edit_(lib, command_edit(lib)))
         elif input_command == 'search':
             print(search_(lib, command_search(lib)))
+        elif input_command == 'sort':
+            sort_(lib, command_sort(lib))
 
 
 if __name__ == '__main__':
