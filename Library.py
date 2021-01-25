@@ -52,40 +52,41 @@ def delete_(lib: list, number_to_delete: int):
     return lib
 
 
-def edit_(lib: list, command_list: list):
+def edit_(lib: list, command_dict: dict):
     '''
     Функция, редактирующая выбранный параметр книги
-    :param lib: Библиотека кнги (список словарей)
-    :param command_list: список команд со следующими индексами: 0-ой - номер книги,
-    1-ый - параметр для редактирования, 2-ой - новое значение данного параметра
+    :param lib: Библиотека книг (список словарей)
+    :param command_dict: словарь команд со следующими ключами: number - номер книги,
+    edit_param - параметр для редактирования, new_value - новое значение данного параметра
     :return: Библиотека книг (список словарей)
     '''
-    lib[command_list[0]-1][command_list[1]] = command_list[2]
+    lib[command_dict['number']-1][command_dict['edit_param']] = command_dict['new_value']
     return lib
 
 
-def search_(lib: list, command: list):
+def search_(lib: list, command: dict):
     '''
     Функция, выполняющая поиск по параметру и значению
     :param lib: Библиотека кнги (список словарей)
-    :param command: список команд со следующими индексами: 0-ой - параметр книги по которому осуществлять поиск,
-    1-ый - искомое значение
+    :param command: словарь команд со следующими ключами: search_parameter - параметр книги по которому
+    осуществлять поиск, search_value - искомое значение
     :return: Книгу с данным значением
     '''
     for book in lib:
-        if book[command[0]] == command[1]:
+        if book[command['search_parameter']] == command['search_value']:
             return book
     return 'Искомое значение не найдено'
 
 
-def sort_(lib, command: list):
+def sort_(lib, command: dict):
     '''
     Функция выполняющая сортировку по выбранному параметру книги с возможность выбора по возрастанию или по убыванию
     :param lib: Библиотека кнги (список словарей)
-    :param command: список команд со следующими индексами: 0-ой - параметр книги по которому осуществлять сортировку,
-    1-ый - по возрастанию/по убыванию
+    :param command: словарь команд со следующими ключами:
+    sort_parameter - параметр книги по которому осуществлять сортировку,
+    choose_reverse - по возрастанию/по убыванию
     :return:
     '''
-    sort_lib = sorted(lib, key=lambda k: k[command[0]], reverse=command[1])
+    sort_lib = sorted(lib, key=lambda k: k[command['sort_parameter']], reverse=command['choose_reverse'])
     for book in sort_lib:
         print(book)

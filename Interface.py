@@ -32,26 +32,26 @@ def command_delete():
 
 
 def command_edit(lib):
-    command_list = []
+    command_dict = dict()
     number = int(input(f'Введите номер книги, которую хотите отредактировать от 1 до {len(lib)} '))
-    command_list.append(number)
+    command_dict['number'] = number
     list_edit_par = [i for i in lib[0].keys() if i != 'number']
     edit_param = input(f'Выберите из списка параметр, который хотите отредактировать {list_edit_par} ').lower()
     while edit_param not in list_edit_par:
         edit_param = input(f'Выберите из списка параметр, который хотите отредактировать {list_edit_par} ').lower()
-    command_list.append(edit_param)
+    command_dict['edit_param'] = edit_param
     if edit_param == 'year' or edit_param == 'pages':
         new_value = int(input('Введите новые данные для данного параметра'))
     elif edit_param == 'rating' or edit_param == 'price':
         new_value = float(input('Введите новые данные для данного параметра'))
     else:
         new_value = input('Введите новые данные для данного параметра')
-    command_list.append(new_value)
-    return command_list
+    command_dict['new_value'] = new_value
+    return command_dict
 
 
 def command_search(lib):
-    command_list = []
+    command_dict = dict()
     list_search_par = [i for i in lib[0].keys()]
     search_parameter = input(f'Введите из списка параметр, который хотите найти {list_search_par} ').lower()
     if search_parameter == 'name' or search_parameter == 'author':
@@ -60,13 +60,13 @@ def command_search(lib):
         search_value = float(input(f'Введите значение {search_parameter}, который хотите найти '))
     else:
         search_value = int(input(f'Введите значение {search_parameter}, который хотите найти '))
-    command_list.append(search_parameter)
-    command_list.append(search_value)
-    return command_list
+    command_dict['search_parameter'] = search_parameter
+    command_dict['search_value'] = search_value
+    return command_dict
 
 
 def command_sort(lib):
-    command_list = []
+    command_dict = dict()
     list_search_par = [i for i in lib[0].keys()]
     sort_parameter = input(f'Введите параметр, по которому хотите отсортировать библиотеку {list_search_par} ')
     choose_reverse = input(f'Выберите способ сортировки: по возрастанию или по убыванию. '
@@ -75,9 +75,9 @@ def command_sort(lib):
         choose_reverse = False
     elif choose_reverse == 'да':
         choose_reverse = True
-    command_list.append(sort_parameter)
-    command_list.append(choose_reverse)
-    return command_list
+    command_dict['sort_parameter'] = sort_parameter
+    command_dict['choose_reverse'] = choose_reverse
+    return command_dict
 
 
 def main_func():
